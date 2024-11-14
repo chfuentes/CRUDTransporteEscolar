@@ -1,9 +1,21 @@
 {% extends "base.html" %}
-{% block title %} 
-    Inicio
-{% endblock %}
-
-{% block content%}
-    <h1>Inicio</h1>
-    <p>Esta es mi pagina de inicio</p>
-{% endblock%}
+{% load static %}
+{% block title %}
+    Transporte Escolar
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="header">
+            <h1>Bienvenidos a Transporte Escolar</h1>
+        </div>
+        <div class="image-frame">
+            <img src="{% static 'imgs/transporte.png' %}" width="400"
+                 alt="Imagen de Transporte Escolar">
+        </div>
+        <div class="content">
+            <p>
+                Ofrecemos servicios de transporte escolar seguros y confiables para tus hijos. Nuestro compromiso es garantizar la seguridad y comodidad en cada viaje.
+            </p>
+        </div>
+    </div>
+{% endblock content %}

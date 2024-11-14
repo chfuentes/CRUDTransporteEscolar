@@ -30,7 +30,10 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, f'Bienvenido {username}!')
-                return redirect('/')
+                if 'next' in request.POST:
+                    return redirect(request.POST.get("next"))
+                else:
+                    return redirect('/')
             else:
                 messages.error(request, 'Usuario o contraseña incorrectos.')
         else:
