@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Eliminar Establecimiento
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4 justify-content-center align-items-center g-2">
+                <h1>Eliminar Establecimiento</h1>
+                <p>
+                    <p>¿Estás seguro de que deseas eliminar el establecimiento {{ establecimiento.nombre }}?</p>
+                </p>
+                <form action="{% url 'establecimientos:eliminar_establecimiento' establecimiento.id %}" method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button class="btn btn-danger">Eliminar Establecimiento</button>
+                    <a href="{% url 'establecimientos:listar_establecimientos' %}" class="btn btn-secondary">Cancelar</a>
+                </form>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
+{% endblock content %}

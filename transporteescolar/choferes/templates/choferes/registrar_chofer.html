@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Registrar Chofer
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4 justify-content-center align-items-center g-2">
+                <h1>Registrar Chofer</h1>
+                <form action="{% url 'choferes:registrar_chofer' %}" method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button class="btn btn-success d-grid gap-2 mx-auto">Registrar Chofer</button>
+                </form>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Eliminar Chofer
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4 justify-content-center align-items-center g-2">
+                <h1>Eliminar Chofer</h1>
+                <p>
+                    ¿Estás seguro de que deseas eliminar al chofer {{ chofer.nombres }} {{ chofer.apellido_paterno }} {{ chofer.apellido_materno }}?
+                </p>
+                <form action="{% url 'choferes:eliminar_chofer' chofer.id %}" method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button class="btn btn-danger">Eliminar Chofer</button>
+                    <a href="{% url 'choferes:listar_choferes' %}" class="btn btn-secondary">Cancelar</a>
+                </form>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
+{% endblock content %}

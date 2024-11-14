@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Editar Chofer
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4 justify-content-center align-items-center g-2">
+                <h1>Editar Chofer</h1>
+                <form action="{% url 'choferes:editar_chofer' chofer.id %}" method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button class="btn btn-success d-grid gap-2 mx-auto">Editar Chofer</button>
+                </form>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}
+    Listado de Furgones
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <h1>Listado de Furgones</h1>
+        <button class="btn btn-primary mb-3"
+                onclick="window.location.href='{% url 'furgones:registrar_furgon' %}'">Registrar Furgon</button>
+        <div class="row">
+            <table id="table"
+                   data-show-export="true"
+                   data-pagination="true"
+                   data-click-to-select="true"
+                   data-show-toggle="true"
+                   data-show-columns="true">
+            </table>
+        </div>
+    </div>
+    <script>
+    var $table = $('#table')
+    $(function () {
+        function operateFormatter(value, row, index) {
+            let editar = '<button class="btn btn-warning btn-sm editar" href="javascript:void(0)" title="Editar">Editar</button>&nbsp;&nbsp;'
+            let eliminar = '<button class="btn btn-danger btn-sm eliminar" href="javascript:void(0)" title="Eliminar">Eliminar</button>&nbsp;&nbsp;'
+            return [editar, eliminar].join('');
+          }
+        
+          window.operateEvents = {
+            'click .editar': function (e, value, row, index) {
+                window.location.href = "{% url 'furgones:editar_furgon' 0 %}".replace('0', row.id);
+            },
+            'click .eliminar': function (e, value, row, index) {
+                window.location.href = "{% url 'furgones:eliminar_furgon' 0 %}".replace('0', row.id);
+            }
+          }
+
+      var data = [{% for furgon in furgones %}
+        {   id:"{{ furgon.id }}",
+            patente:"{{ furgon.patente }}",
+            marca_modelo:"{{ furgon.marca }} - {{ furgon.modelo }}",
+            año: "{{ furgon.año }}",
+            estado: "{{ furgon.get_estado_display }}",
+            chofer_asignado: "{{ furgon.chofer_asignado }}",
+            establecimientos: "{% for establecimiento in furgon.establecimientos.all %}{{ establecimiento.nombre }}{% if not forloop.last %}, {% endif %}{% endfor %}",
+            operate: "Detalle"
+        },
+        {% endfor %}
+        ]
+
+
+           function initTable() {
+            $table.bootstrapTable('destroy').bootstrapTable({
+              height: 550,
+              locale: "es-cl",
+              data: data,
+              columns: [
+                [{
+                  field: 'id',
+                  title: 'id',
+                  visible: false,
+                  align: 'center'
+                },{
+                    field: 'patente',
+                    title: 'patente',
+                    visible: true,
+                    align: 'center'
+                  },{
+                    field: 'marca_modelo',
+                    title: 'marca_modelo',
+                    sortable: true,
+                    align: 'center'
+                  },
+                  {
+                    field: 'año',
+                    title: 'año',
+                    sortable: true,
+                    align: 'center'
+                  },
+                  {
+                    field: 'estado',
+                    title: 'estado',
+                    sortable: true,
+                    align: 'center'
+                  },
+                  {
+                    field: 'chofer_asignado',
+                    title: 'chofer_asignado',
+                    sortable: true,
+                    align: 'center'
+                  },
+                  {
+                    field: 'establecimientos',
+                    title: 'establecimientos',
+                    sortable: true,
+                    align: 'center'
+                  },
+                  {
+                    field: 'operate',
+                    title: 'Detalle',
+                    align: 'center',
+                    clickToSelect: false,
+                    events: window.operateEvents,
+                    formatter: operateFormatter
+                  }
+                ]
+              ]
+            })
+          
+        }
+
+        
+      
+      initTable()
+    })
+
+    </script>
+{% endblock content %}

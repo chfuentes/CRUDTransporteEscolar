@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block title %}
+    Listado de Establecimientos
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <h1>Listado de Establecimientos</h1>
+        <button class="btn btn-primary mb-3"
+                onclick="window.location.href='{% url 'establecimientos:registrar_establecimiento' %}'">Registrar Establecimiento</button>
+        <div class="row">
+            <table id="table"
+            data-show-export="true"
+            data-pagination="true"
+            data-click-to-select="true"
+            data-show-toggle="true"
+            data-show-columns="true"
+
+            >
+          </table>
+        </div>
+    </div>
+
+
+<script>
+    var $table = $('#table')
+    $(function () {
+        function operateFormatter(value, row, index) {
+            let editar = '<button class="btn btn-warning btn-sm editar" href="javascript:void(0)" title="Editar">Editar</button>&nbsp;&nbsp;'
+            let eliminar = '<button class="btn btn-danger btn-sm eliminar" href="javascript:void(0)" title="Eliminar">Eliminar</button>&nbsp;&nbsp;'
+            return [editar, eliminar].join('');
+          }
+        
+          window.operateEvents = {
+            'click .editar': function (e, value, row, index) {
+                window.location.href = "{% url 'establecimientos:editar_establecimiento' 0 %}".replace('0', row.id);
+            },
+            'click .eliminar': function (e, value, row, index) {
+                window.location.href = "{% url 'establecimientos:eliminar_establecimiento' 0 %}".replace('0', row.id);
+            }
+          }
+
+      var data = [{% for establecimiento in establecimientos %}
+        {   id:"{{ establecimiento.id }}",
+            nombre:"{{ establecimiento.nombre }}",
+            direccion:"{{ establecimiento.direccion }}",
+            telefono: "{{ establecimiento.telefono }}",
+            comuna: "{{ establecimiento.comuna.nombre }}",
+            email: "{{ establecimiento.email }}",
+            estado: "{{ establecimiento.get_estado_display }}",
+            operate: "Detalle"
+        },
+        {% endfor %}
+        ]
+
+
+           function initTable() {
+            $table.bootstrapTable('destroy').bootstrapTable({
+              height: 550,
+              locale: "es-cl",
+              data: data,
+              columns: [
+                [{
+                  field: 'id',
+                  title: 'id',
+                  visible: false,
+                  align: 'center'
+                },{
+                    field: 'nombre',
+                    title: 'nombre',
+                    visible: true,
+                    align: 'center'
+                  },{
+                    field: 'direccion',
+                    title: 'direccion',
+                    sortable: true,
+                    align: 'center'
+                  },
+                  {
+                    field: 'telefono',
+                    title: 'telefono',
+                    sortable: true,
+                    align: 'center'
+                  },
+                  {
+                    field: 'comuna',
+                    title: 'comuna',
+                    sortable: true,
+                    align: 'center'
+                  },
+                  {
+                    field: 'email',
+                    title: 'email',
+                    sortable: true,
+                    align: 'center'
+                  },
+                  {
+                    field: 'estado',
+                    title: 'estado',
+                    sortable: true,
+                    align: 'center'
+                  },
+                  {
+                    field: 'operate',
+                    title: 'Detalle',
+                    align: 'center',
+                    clickToSelect: false,
+                    events: window.operateEvents,
+                    formatter: operateFormatter
+                  }
+                ]
+              ]
+            })
+          
+        }
+
+        
+      
+      initTable()
+    })
+
+</script>
+{% endblock content %}

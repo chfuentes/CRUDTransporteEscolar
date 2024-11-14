@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block title %}
+    Listado de Choferes
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <h1>Listado de Choferess</h1>
+        <button class="btn btn-primary mb-3"
+                onclick="window.location.href='{% url 'choferes:registrar_chofer' %}'">Registrar Nuevo Chofer</button>
+        <div class="row">
+            <table id="table"
+            data-show-export="true"
+            data-pagination="true"
+            {% comment %} data-side-pagination="server" {% endcomment %}
+            data-click-to-select="true"
+            data-show-toggle="true"
+            data-show-columns="true"
+
+            >
+          </table>
+        </div>
+    </div>
+
+
+<script>
+    var $table = $('#table')
+    $(function () {
+        function operateFormatter(value, row, index) {
+            let editar = '<button class="btn btn-warning btn-sm editar" href="javascript:void(0)" title="Editar">Editar</button>&nbsp;&nbsp;'
+            let eliminar = '<button class="btn btn-danger btn-sm eliminar" href="javascript:void(0)" title="Eliminar">Eliminar</button>&nbsp;&nbsp;'
+            return [editar, eliminar].join('');
+          }
+        
+          window.operateEvents = {
+            /*'click .editar': function (e, value, row, index) {
+                miid=row.id
+              window.location.href="/choferes/editar_chofer/"+miid+"/"
+            },*/
+            'click .editar': function (e, value, row, index) {
+                window.location.href = "{% url 'choferes:editar_chofer' 0 %}".replace('0', row.id);
+            },
+            /*'click .eliminar': function (e, value, row, index) {
+              miid=row.id
+              const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+              $.ajax({
+                headers: {'X-CSRFToken' : csrftoken},
+                method: "POST",
+                url: "eliminar_anuncio/"+miid+"/",
+              })
+              .done(function( msg ) {
+                window.location.href="/anuncios/otrolistar"
+              });
+
+
+            },*/
+            'click .eliminar': function (e, value, row, index) {
+                window.location.href = "{% url 'choferes:eliminar_chofer' 0 %}".replace('0', row.id);
+            }
+          }
+
+      var data = [{% for chofer in choferes %}
+        {   id:"{{ chofer.id }}",
+            rut:"{{ chofer.rut }}-{{ chofer.dv }}",
+            nombres:"{{ chofer.nombres }}",
+            apellido_paterno: "{{ chofer.apellido_paterno }}",
+            apellido_materno: "{{ chofer.apellido_materno }}",
+            comuna: "{{ chofer.comuna.nombre }}",
+            estado: "{{ chofer.get_estado_display }}",
+            operate: "Detalle"
+        },
+        {% endfor %}
+        ]
+
+
+           function initTable() {
+            $table.bootstrapTable('destroy').bootstrapTable({
+              height: 550,
+              locale: "es-cl",
+              data: data,
+              columns: [
+                [{
+                  field: 'id',
+                  title: 'id',
+                  visible: false,
+                  align: 'center'
+                },{
+                    field: 'rut',
+                    title: 'rut',
+                    visible: false,
+                    align: 'center'
+                  },{
+                    field: 'nombres',
+                    title: 'nombres',
+                    sortable: true,
+                    align: 'center'
+                  },
+                  {
+                    field: 'apellido_paterno',
+                    title: 'apellido_paterno',
+                    sortable: true,
+                    align: 'center'
+                  },
+                  {
+                    field: 'apellido_materno',
+                    title: 'apellido_materno',
+                    sortable: true,
+                    align: 'center'
+                  },
+                  {
+                    field: 'comuna',
+                    title: 'comuna',
+                    sortable: true,
+                    align: 'center'
+                  },
+                  {
+                    field: 'estado',
+                    title: 'estado',
+                    sortable: true,
+                    align: 'center'
+                  },
+                  {
+                    field: 'operate',
+                    title: 'Detalle',
+                    align: 'center',
+                    clickToSelect: false,
+                    events: window.operateEvents,
+                    formatter: operateFormatter
+                  }
+                ]
+              ]
+            })
+          
+        }
+
+        
+      
+      initTable()
+    })
+
+</script>
+{% endblock content %}
