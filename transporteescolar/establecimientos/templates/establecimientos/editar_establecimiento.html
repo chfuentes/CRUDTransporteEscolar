@@ -12,7 +12,12 @@
                 <form action="{% url 'establecimientos:editar_establecimiento' establecimiento.id %}" method="post">
                     {% csrf_token %}
                     {{ form|crispy }}
-                    <button class="btn btn-success d-grid gap-2 mx-auto">Editar Establecimiento</button>
+                    
+                    <center>
+                        <button class="btn btn-success">Editar Establecimiento</button>
+                        <a href="{% url 'establecimientos:listar_establecimientos' %}"
+                           class="btn btn-secondary">Cancelar</a>
+                    </center>
                 </form>
             </div>
             <div class="col-sm-4"></div>

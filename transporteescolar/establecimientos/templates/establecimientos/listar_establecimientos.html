@@ -1,33 +1,38 @@
 {% extends "base.html" %}
 {% block title %}
-    Listado de Establecimientos
+  Listado de Establecimientos
 {% endblock title %}
 {% block content %}
-    <div class="container">
-        <h1>Listado de Establecimientos</h1>
-        <button class="btn btn-primary mb-3"
-                onclick="window.location.href='{% url 'establecimientos:registrar_establecimiento' %}'">Registrar Establecimiento</button>
-        <div class="row">
-            <table id="table"
-            data-show-export="true"
-            data-pagination="true"
-            data-click-to-select="true"
-            data-show-toggle="true"
-            data-show-columns="true"
-            data-search="true"
-
-            >
-          </table>
-        </div>
+  <div class="container">
+    <h1>Listado de Establecimientos</h1>
+    {% if user.is_superuser %}
+      <button class="btn btn-primary mb-3"
+              onclick="window.location.href='{% url 'establecimientos:registrar_establecimiento' %}'">
+        Registrar Establecimiento
+      </button>
+    {% endif %}
+    <div class="row">
+      <table id="table"
+             data-show-export="true"
+             data-pagination="true"
+             data-click-to-select="true"
+             data-show-toggle="true"
+             data-show-columns="true"
+             data-search="true">
+      </table>
     </div>
-
-
-<script>
+  </div>
+  <script>
     var $table = $('#table')
     $(function () {
         function operateFormatter(value, row, index) {
-            let editar = '<button class="btn btn-warning btn-sm editar" href="javascript:void(0)" title="Editar">Editar</button>&nbsp;&nbsp;'
-            let eliminar = '<button class="btn btn-danger btn-sm eliminar" href="javascript:void(0)" title="Eliminar">Eliminar</button>&nbsp;&nbsp;'
+          
+            let editar =""
+            let eliminar =""
+            {% if user.is_superuser %}
+              editar = '<button class="btn btn-warning btn-sm editar" href="javascript:void(0)" title="Editar">Editar</button>&nbsp;&nbsp;'
+              eliminar = '<button class="btn btn-danger btn-sm eliminar" href="javascript:void(0)" title="Eliminar">Eliminar</button>&nbsp;&nbsp;'
+            {% endif %}
             return [editar, eliminar].join('');
           }
         
@@ -76,16 +81,16 @@
                     title: 'Dirección',
                     sortable: true,
                     align: 'center'
-                  },
+                  },{
+                    field: 'comuna',
+                    title: 'Comuna',
+                    sortable: true,
+                    align: 'center'
+                  }
+                  ,
                   {
                     field: 'telefono',
                     title: 'Teléfono',
-                    sortable: true,
-                    align: 'center'
-                  },
-                  {
-                    field: 'comuna',
-                    title: 'Comuna',
                     sortable: true,
                     align: 'center'
                   },
@@ -108,6 +113,9 @@
                     clickToSelect: false,
                     events: window.operateEvents,
                     formatter: operateFormatter
+                    {% if not user.is_superuser %}
+                    ,  visible: false,
+                    {% endif %}
                   }
                 ]
               ]
@@ -120,5 +128,5 @@
       initTable()
     })
 
-</script>
+  </script>
 {% endblock content %}

@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Establecimiento
 from .forms import EstablecimientoForm
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 
 @login_required(login_url="/usuarios/login")
+@user_passes_test(lambda u: u.is_superuser)
 def registrar_establecimiento(request):
     if request.method == 'POST':
         form = EstablecimientoForm(request.POST)
@@ -26,6 +27,7 @@ def listar_establecimientos(request):
 
 
 @login_required(login_url="/usuarios/login")
+@user_passes_test(lambda u: u.is_superuser)
 def editar_establecimiento(request, id):
     establecimiento = get_object_or_404(Establecimiento, id=id)
     if request.method == 'POST':
@@ -41,6 +43,7 @@ def editar_establecimiento(request, id):
 
 
 @login_required(login_url="/usuarios/login")
+@user_passes_test(lambda u: u.is_superuser)
 def eliminar_establecimiento(request, id):
     establecimiento = get_object_or_404(Establecimiento, id=id)
     if request.method == 'POST':

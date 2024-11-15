@@ -9,7 +9,7 @@ class Establecimiento(models.Model):
 
     nombre = models.CharField(max_length=100)
     direccion = models.CharField(max_length=255)
-    telefono = models.CharField(max_length=15)
+    telefono = models.CharField(max_length=9)
     comuna = models.ForeignKey('Comuna', on_delete=models.SET_NULL, null=True)
     email = models.EmailField()
     estado = models.CharField(

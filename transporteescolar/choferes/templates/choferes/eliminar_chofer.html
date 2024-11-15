@@ -15,8 +15,11 @@
                 <form action="{% url 'choferes:eliminar_chofer' chofer.id %}" method="post">
                     {% csrf_token %}
                     {{ form|crispy }}
-                    <button class="btn btn-danger">Eliminar Chofer</button>
-                    <a href="{% url 'choferes:listar_choferes' %}" class="btn btn-secondary">Cancelar</a>
+                    <center>
+                        <button class="btn btn-danger">Eliminar Chofer</button>
+                        <a href="{% url 'choferes:listar_choferes' %}"
+                           class="btn btn-secondary">Cancelar</a>
+                    </center>
                 </form>
             </div>
             <div class="col-sm-4"></div>

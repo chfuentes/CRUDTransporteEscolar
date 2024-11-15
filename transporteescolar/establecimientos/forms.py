@@ -10,7 +10,7 @@ class EstablecimientoForm(forms.ModelForm):
         fields = ['nombre', 'direccion', 'telefono', 'comuna', 'email']
 
     telefono = forms.CharField(
-        max_length=12,
+        max_length=9,
         help_text="Ingrese 9 dígitos"
     )
 
@@ -18,8 +18,8 @@ class EstablecimientoForm(forms.ModelForm):
         telefono = self.cleaned_data.get('telefono')
 
         # Si el teléfono contiene +56, eliminar el prefijo para mostrar solo 9 dígitos en el formulario
-        if telefono.startswith('+56'):
-            telefono = telefono[3:]
+        # if telefono.startswith('+56'):
+        #    telefono = telefono[3:]
 
         # Validar que el teléfono tenga exactamente 9 dígitos
         if not re.match(r'^\d{9}$', telefono):

@@ -23,12 +23,13 @@ class Chofer(models.Model):
     fecha_nacimiento = models.DateField()
     direccion = models.CharField(max_length=255)
     comuna = models.ForeignKey(Comuna, on_delete=models.SET_NULL, null=True)
-    telefono = models.CharField(
-        max_length=12,
-        validators=[RegexValidator(
-            regex=r'^\+56\d{9}$', message='El teléfono debe tener el formato +56XXXXXXXXX')],
-        default=None
-    )
+    telefono = models.CharField(max_length=9)
+    # telefono = models.CharField(
+    #     max_length=12,
+    #     validators=[RegexValidator(
+    #         regex=r'^\+56\d{9}$', message='El teléfono debe tener el formato +56XXXXXXXXX')],
+    #     default=None
+    # )
     email = models.EmailField(default=None)
     estado = models.CharField(
         max_length=1, choices=ESTADO_CHOICES, default='A')

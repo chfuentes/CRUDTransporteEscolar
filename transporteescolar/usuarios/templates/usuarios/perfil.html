@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Perfil{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4 justify-content-center align-items-center g-2">
+                <h1>Mi Perfil</h1>
+                <form action="{% url 'usuarios:perfil' %}" method="post">
+                    {% csrf_token %}
+                    <h3>Actualizar Información Personal</h3>
+                    {{ profile_form | crispy}}
+                    <h3>Cambiar Contraseña</h3>
+                    {{ password_form| crispy }}
+                    <button class="btn btn-success d-grid gap-2 mx-auto">Actualizar</button>
+                </form>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
+{% endblock content %}

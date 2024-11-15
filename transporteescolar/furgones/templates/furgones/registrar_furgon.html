@@ -12,7 +12,13 @@
                 <form action="{% url 'furgones:registrar_furgon' %}" method="post">
                     {% csrf_token %}
                     {{ form|crispy }}
-                    <button class="btn btn-success d-grid gap-2 mx-auto">Registrar Furgon</button>
+                    <center>
+                        <button class="btn btn-success">Registrar Furgon</button>
+                        <a href="{% url 'furgones:listar_furgones' %}"
+                           class="btn btn-secondary">Cancelar</a>
+                    </center>
+
+                    
                 </form>
             </div>
             <div class="col-sm-4"></div>

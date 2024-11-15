@@ -9,10 +9,15 @@
             <div class="col-sm-4"></div>
             <div class="col-sm-4 justify-content-center align-items-center g-2">
                 <h1>Registrar Establecimiento</h1>
-                <form action="{% url 'establecimientos:registrar_establecimiento' %}" method="post">
+                <form action="{% url 'establecimientos:registrar_establecimiento' %}"
+                      method="post">
                     {% csrf_token %}
                     {{ form|crispy }}
-                    <button class="btn btn-success d-grid gap-2 mx-auto">Registrar Establecimiento</button>
+                    <center>
+                        <button class="btn btn-success ">Registrar Establecimiento</button>
+                        <a href="{% url 'establecimientos:listar_establecimientos' %}"
+                           class="btn btn-secondary">Cancelar</a>
+                    </center>
                 </form>
             </div>
             <div class="col-sm-4"></div>

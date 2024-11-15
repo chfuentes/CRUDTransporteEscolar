@@ -9,13 +9,71 @@
             <div class="col-sm-4"></div>
             <div class="col-sm-4 justify-content-center align-items-center g-2">
                 <h1>Editar Chofer</h1>
-                <form action="{% url 'choferes:editar_chofer' chofer.id %}" method="post">
+                <form id="choferForm"
+                      action="{% url 'choferes:editar_chofer' chofer.id %}"
+                      method="post">
                     {% csrf_token %}
-                    {{ form|crispy }}
-                    <button class="btn btn-success d-grid gap-2 mx-auto">Editar Chofer</button>
+                    {{ form.non_field_errors }}
+                    {{ form.rut|as_crispy_field }}
+                    {{ form.dv|as_crispy_field }}
+                    {{ form.nombres|as_crispy_field }}
+                    {{ form.apellido_paterno|as_crispy_field }}
+                    {{ form.apellido_materno|as_crispy_field }}
+                    <div class="form-group">
+                        <label for="id_fecha_nacimiento">Fecha Nacimiento</label>
+                        <input type="text" class="form-control" id="datepicker">
+                    </div>
+                    <br>
+                    {{ form.direccion|as_crispy_field }}
+                    {{ form.comuna|as_crispy_field }}
+                    {{ form.telefono|as_crispy_field }}
+                    {{ form.email|as_crispy_field }}
+                    <input type="hidden"
+                           id="id_fecha_nacimiento"
+                           name="fecha_nacimiento"
+                           value="{{ chofer.fecha_nacimiento|date:'Y-m-d' }}">
+                    <center>
+                        <button class="btn btn-success">Editar Chofer</button>
+                        <a href="{% url 'choferes:listar_choferes' %}" class="btn btn-secondary">Cancelar</a>
+                    </center>
                 </form>
             </div>
             <div class="col-sm-4"></div>
         </div>
     </div>
+    <script>
+        $(document).ready(function(){
+           
+            function adjustDate(date) {
+                var d = new Date(date);
+                d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
+                var month = '' + (d.getMonth() + 1);
+                var day = '' + d.getDate();
+                var year = d.getFullYear();
+
+                if (month.length < 2) month = '0' + month;
+                if (day.length < 2) day = '0' + day;
+
+                return [day, month, year].join('/');
+            }
+
+            var fechaNacimiento = '{{ chofer.fecha_nacimiento|date:"Y-m-d" }}';
+            console.log(fechaNacimiento)
+            var adjustedDate = adjustDate(fechaNacimiento);
+            console.log(adjustedDate)
+
+            $('#datepicker').datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                language: 'es'
+            }).datepicker('setDate', adjustedDate).on('changeDate', function(e) {
+                $('#id_fecha_nacimiento').val(e.format('yyyy-mm-dd'));
+            });
+
+            $('#choferForm').on('submit', function() {
+                var selectedDate = $('#datepicker').datepicker('getFormattedDate', 'yyyy-mm-dd');
+                $('#id_fecha_nacimiento').val(selectedDate);
+            });
+        });
+    </script>
 {% endblock content %}
