@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.validators import RegexValidator
+from django.db.models.signals import m2m_changed
 from establecimientos.models import Establecimiento
 from django.core.exceptions import ValidationError
 from choferes.models import Chofer
@@ -16,14 +17,9 @@ class Furgon(models.Model):
     def validate_patente(value):
         if not re.match(r'^[BCDFGHJKLMNPQRSTVWXYZ]{4}\d{2}$', value):
             raise ValidationError(
-                '%(value)s no es un formato de patente válido. Debe ser 4 letras (sin vocales) seguidas de 2 números.',
+                '%(value)s no es un formato de patente válido. Debe ser de 4 letras (sin vocales) seguidas de 2 números.',
                 params={'value': value},
             )
-
-    def validate_establecimientos(value):
-        if value.count() > 3:
-            raise ValidationError(
-                'Un furgón no puede estar asociado a más de 3 establecimientos.')
 
     patente = models.CharField(
         max_length=6, unique=True, validators=[validate_patente])
@@ -37,12 +33,6 @@ class Furgon(models.Model):
         Chofer, on_delete=models.SET_NULL, null=True, blank=True)
     establecimientos = models.ManyToManyField(
         Establecimiento, blank=True)
-
-    def clean(self):
-        super().clean()
-        if self.establecimientos.count() > 3:
-            raise ValidationError(
-                'Un furgón no puede estar asociado a más de 3 establecimientos.')
 
     def __str__(self):
         return self.patente

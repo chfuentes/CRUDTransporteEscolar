@@ -37,11 +37,6 @@
       {% endblock title %}
     </title>
   </head>
-  <style>
-    .errorlist {
-      color: red !important;
-    }
-  </style>
   <body>
     <nav class="navbar sticky-top navbar-expand-lg bg-dark border-bottom border-body"
          data-bs-theme="dark">
@@ -139,5 +134,5 @@
     {% if messages %}
       {% for message in messages %}<script>mensaje(' {{ message }}', '{{message.tags}}')</script>{% endfor %}
     {% endif %}
-  </body>
-</html>
+
+    {% include "footer.html" %}

@@ -4,18 +4,17 @@
 {% endblock title %}
 {% block content %}
     <div class="container">
-        <h1>Listado de Choferess</h1>
+        <h1>Listado de Choferes</h1>
         <button class="btn btn-primary mb-3"
                 onclick="window.location.href='{% url 'choferes:registrar_chofer' %}'">Registrar Nuevo Chofer</button>
         <div class="row">
             <table id="table"
             data-show-export="true"
             data-pagination="true"
-            {% comment %} data-side-pagination="server" {% endcomment %}
             data-click-to-select="true"
             data-show-toggle="true"
             data-show-columns="true"
-
+            data-search="true"
             >
           </table>
         </div>
@@ -86,36 +85,36 @@
                   align: 'center'
                 },{
                     field: 'rut',
-                    title: 'rut',
+                    title: 'Rut',
                     visible: false,
                     align: 'center'
                   },{
                     field: 'nombres',
-                    title: 'nombres',
+                    title: 'Nombres',
                     sortable: true,
                     align: 'center'
                   },
                   {
                     field: 'apellido_paterno',
-                    title: 'apellido_paterno',
+                    title: 'Apellido Paterno',
                     sortable: true,
                     align: 'center'
                   },
                   {
                     field: 'apellido_materno',
-                    title: 'apellido_materno',
+                    title: 'Apellido Materno',
                     sortable: true,
                     align: 'center'
                   },
                   {
                     field: 'comuna',
-                    title: 'comuna',
+                    title: 'Comuna',
                     sortable: true,
                     align: 'center'
                   },
                   {
                     field: 'estado',
-                    title: 'estado',
+                    title: 'Estado',
                     sortable: true,
                     align: 'center'
                   },

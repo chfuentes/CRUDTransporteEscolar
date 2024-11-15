@@ -42,3 +42,8 @@ body {
 .content p {
     font-size: 1.2em;
 }
+
+.tabla-responsive {
+    overflow-x: auto;
+    overflow-y: hidden;
+}

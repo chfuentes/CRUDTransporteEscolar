@@ -13,7 +13,8 @@
                    data-pagination="true"
                    data-click-to-select="true"
                    data-show-toggle="true"
-                   data-show-columns="true">
+                   data-show-columns="true"
+                   data-search="true">
             </table>
         </div>
     </div>
@@ -54,6 +55,7 @@
               height: 550,
               locale: "es-cl",
               data: data,
+              classes:"table table-striped table-dark table-fit table-bordered table-hover",
               columns: [
                 [{
                   field: 'id',
@@ -62,36 +64,36 @@
                   align: 'center'
                 },{
                     field: 'patente',
-                    title: 'patente',
+                    title: 'Patente',
                     visible: true,
                     align: 'center'
                   },{
                     field: 'marca_modelo',
-                    title: 'marca_modelo',
+                    title: 'Marca - Modelo',
                     sortable: true,
                     align: 'center'
                   },
                   {
                     field: 'año',
-                    title: 'año',
+                    title: 'Año',
                     sortable: true,
                     align: 'center'
                   },
                   {
                     field: 'estado',
-                    title: 'estado',
+                    title: 'Estado',
                     sortable: true,
                     align: 'center'
                   },
                   {
                     field: 'chofer_asignado',
-                    title: 'chofer_asignado',
+                    title: 'Chofer Asignado',
                     sortable: true,
                     align: 'center'
                   },
                   {
                     field: 'establecimientos',
-                    title: 'establecimientos',
+                    title: 'Establecimientos',
                     sortable: true,
                     align: 'center'
                   },

@@ -26,7 +26,7 @@ class Chofer(models.Model):
     telefono = models.CharField(
         max_length=12,
         validators=[RegexValidator(
-            regex=r'^\+569\d{8}$', message='El teléfono debe tener el formato +569XXXXXXXX')],
+            regex=r'^\+56\d{9}$', message='El teléfono debe tener el formato +56XXXXXXXXX')],
         default=None
     )
     email = models.EmailField(default=None)
